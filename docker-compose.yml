@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  imgur_minio:
+    image: 10446005/imgur-minio:latest
+    restart: always
+    networks:
+      - web
+    env_file:
+      - .env
