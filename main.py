@@ -4,6 +4,7 @@ from typing import Annotated
 import httpx
 from environs import Env
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from minio import Minio
 from minio.error import S3Error
 from pydantic import BaseModel
@@ -12,6 +13,14 @@ env = Env()
 env.read_env()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://hackmd.io/"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 endpoint = env("MINIO_S3_ENDPOINT")
 minio_client = Minio(
